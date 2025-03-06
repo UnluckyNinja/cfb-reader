@@ -6,4 +6,11 @@ export default defineBuildConfig({
   ],
   declaration: 'node16',
   clean: true,
+
+  rollup: {
+    emitCJS: true,
+    esbuild: {
+      target: 'es2021', // will contain decorator metadata
+    },
+  },
 })
