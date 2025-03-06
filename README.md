@@ -8,6 +8,18 @@
 
 Read content of compound file binary format
 
+## Binary definition
+Compound file binary format [Official document](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-cfb/c5d235f7-b73c-4ec5-bf8d-5c08306cd023)
+
+| Sectors | Header | DiFAT | FAT Storage | Directory | MiniFAT | Mini Stream | Normal Stream |
+| ---       | ---    | ---   | ---         | ---       | ---     | ---         | ---           |
+| Content   | Basic info of various Structure | A list of all FAT Storage in the file | The next sector position at the specified index (except DiFAT and FAT Storage itself)| The directory structure that the file packed | The next position at the specified index (in the context of mini stream strucutre) | Mini stream blobs (<4096B) | Regular blobs (>4096B) |
+| Starting Location | 0 | Specified in header | DiFAT[0] | Specified in header | Specified in header | Specified by the root entry of directory entries (at index 0) | Specified in each entry |
+| Amount | 1 sector | Specified in Header | Specified in header (not sure) | Not specified (v4: in header) | Specified in Header | Specified by the root entry of directory entries | Not specified |
+| Sub-structure | N/A | FAT Storage's index in FAT | Next position in FAT chain of a sector | An entry specified various properties of the object | Next position in mini stream chain of a mini sector | Part of a mini object | Part of a regular object |
+| Sub-strucutre Type | N/A | uint32 | uint32 | Directory Entry | uint32 | buffer | buffer |
+| Sub-structure Size | N/A | 4 bytes | 4 bytes | 128 bytes | 4 bytes | 64 bytes | Sector size |
+
 ## License
 
 [MIT](./LICENSE) License

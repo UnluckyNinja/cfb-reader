@@ -2,7 +2,7 @@
   "name": "cfb-reader",
   "type": "module",
   "version": "0.0.0",
-  "description": "Read content of compound file binary format",
+  "description": "Read the content of compound file binary format",
   "author": "UnluckyNinja",
   "license": "MIT",
   "homepage": "https://github.com/UnluckyNinja/cfb-reader#readme",
@@ -12,12 +12,7 @@
   },
   "bugs": "https://github.com/UnluckyNinja/cfb-reader/issues",
   "keywords": [],
-  "workspaces": [
-    "playground",
-    "docs",
-    "packages/*",
-    "examples/*"
-  ],
+  "workspaces": [],
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs"
@@ -38,6 +33,9 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "binspector": "^1.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.1.1",
