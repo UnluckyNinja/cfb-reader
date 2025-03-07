@@ -201,6 +201,6 @@ export class CompoundFileBinary {
    */
   getStreamBufferOf(index = 0): ArrayBuffer {
     const offset = getFATSectorOffsetBytes(this.header, index)
-    return this.buffer.slice(offset, offset + 1 << this.header.sectorShift)
+    return this.buffer.slice(offset, offset + (1 << this.header.sectorShift))
   }
 }
