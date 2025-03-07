@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index db89c9bddd55b98bee784b168213d981b47980b5..02bd1777c90dae05cf7d27713d079ac051930f7f 100644
+--- a/package.json
++++ b/package.json
+@@ -7,7 +7,6 @@
+   "files": [
+     "/dist"
+   ],
+-  "module": "src/index.ts",
+   "scripts": {
+     "clean": "npx rimraf dist",
+     "build": "npm run clean && webpack --mode=production",

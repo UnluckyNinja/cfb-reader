@@ -15,11 +15,14 @@
   "workspaces": [],
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs"
+    ".": {
+      "import": "./dist/cfb-reader.mjs",
+      "require": "./dist/cfb-reader.cjs"
+    }
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "main": "./dist/cfb-reader.mjs",
+  "module": "./dist/cfb-reader.mjs",
+  "types": "./dist/cfb-reader.d.mts",
   "files": [
     "dist"
   ],
@@ -57,5 +60,9 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "patchedDependencies": {
+    "unbuild@3.5.0": "patches/unbuild@3.5.0.patch",
+    "binspector@1.0.0": "patches/binspector@1.0.0.patch"
   }
 }

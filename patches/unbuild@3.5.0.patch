@@ -1,0 +1,31 @@
+diff --git a/dist/shared/unbuild.BQ_Ce1-K.mjs b/dist/shared/unbuild.BQ_Ce1-K.mjs
+index d68865d5c35b7425ad39fa15abfb2655bb400c80..a0da199c3e086abb529d712306d16b45388cc286 100644
+--- a/dist/shared/unbuild.BQ_Ce1-K.mjs
++++ b/dist/shared/unbuild.BQ_Ce1-K.mjs
+@@ -643,17 +643,25 @@ function getRollupOptions(ctx) {
+     external(originalId) {
+       const resolvedId = resolveAlias(originalId, _aliases);
+       const pkgName = parseNodeModulePath(resolvedId)?.name || parseNodeModulePath(originalId)?.name || getpkg(originalId);
++
++      if (Array.isArray(ctx.options.rollup.inlineDependencies) && (arrayIncludes(ctx.options.rollup.inlineDependencies, pkgName) || arrayIncludes(ctx.options.rollup.inlineDependencies, originalId) || arrayIncludes(ctx.options.rollup.inlineDependencies, resolvedId))) {
++        return false
++      }
++
+       if (arrayIncludes(ctx.options.externals, pkgName) || arrayIncludes(ctx.options.externals, originalId) || arrayIncludes(ctx.options.externals, resolvedId)) {
+         return true;
+       }
++
+       for (const id of [originalId, resolvedId]) {
+         if (id[0] === "." || isAbsolute(id) || /src[/\\]/.test(id) || id.startsWith(ctx.pkg.name)) {
+           return false;
+         }
+       }
+-      if (ctx.options.rollup.inlineDependencies === true || Array.isArray(ctx.options.rollup.inlineDependencies) && (arrayIncludes(ctx.options.rollup.inlineDependencies, pkgName) || arrayIncludes(ctx.options.rollup.inlineDependencies, originalId) || arrayIncludes(ctx.options.rollup.inlineDependencies, resolvedId))) {
++
++      if (ctx.options.rollup.inlineDependencies === true) {
+         return false;
+       }
++
+       warn(ctx, `Implicitly bundling "${originalId}"`);
+       return false;
+     },

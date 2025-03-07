@@ -20,6 +20,10 @@ Compound file binary format [Official document](https://learn.microsoft.com/zh-c
 | Sub-strucutre Type | N/A | uint32 | uint32 | Directory Entry | uint32 | buffer | buffer |
 | Sub-structure Size | N/A | 4 bytes | 4 bytes | 128 bytes | 4 bytes | 64 bytes | Sector size |
 
+## Note on package patches
+- `unbuild` is patched to forcely bundle dependencies for browser
+- `binspector` is patched to resolve the error casued by incorrect 'module' in its `package.json`
+
 ## License
 
 [MIT](./LICENSE) License
