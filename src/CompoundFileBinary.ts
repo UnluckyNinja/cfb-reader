@@ -130,7 +130,7 @@ export class CompoundFileBinary {
       let cur = this.minifatArray.length - 1
       let last = this.minifatArray[cur]
       while (cur < fatIndex) {
-        last = this.getNextSectorIndexOf(cur)
+        last = this.getNextSectorIndexOf(last)
         cur++
         this.minifatArray[cur] = last
       }
@@ -168,7 +168,7 @@ export class CompoundFileBinary {
       let cur = this.miniStreamArray.length - 1
       let last = this.miniStreamArray[cur]
       while (cur < index) {
-        last = this.getNextSectorIndexOf(cur)
+        last = this.getNextSectorIndexOf(last)
         cur++
         this.miniStreamArray[cur] = last
       }
