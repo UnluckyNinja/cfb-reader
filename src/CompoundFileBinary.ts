@@ -94,7 +94,8 @@ export class CompoundFileBinary {
     while (cur < index) {
       sector = this.getNextSectorIndexOf(sector)
       if (sector >= 0xFF_FF_FF_FC) {
-        return sector & 0xFF_FF_FF_FF
+        throw new Error(`Reached the end of Directory Sector chain. 
+          The next sector of ${this.miniStreamArray[cur].toString(16)} is ${sector.toString(16)}`)
       }
       cur++
       this.directoryArray[cur] = sector
@@ -131,6 +132,10 @@ export class CompoundFileBinary {
       let last = this.minifatArray[cur]
       while (cur < fatIndex) {
         last = this.getNextSectorIndexOf(last)
+        if (last >= 0xFF_FF_FF_FC) {
+          throw new Error(`Reached the end of Mini FAT sector chain. 
+            The next sector of ${this.miniStreamArray[cur].toString(16)} is ${last.toString(16)}`)
+        }
         cur++
         this.minifatArray[cur] = last
       }
@@ -169,6 +174,10 @@ export class CompoundFileBinary {
       let last = this.miniStreamArray[cur]
       while (cur < index) {
         last = this.getNextSectorIndexOf(last)
+        if (last >= 0xFF_FF_FF_FC) {
+          throw new Error(`Reached the end of Mini Stream sector chain. 
+            The next sector of ${this.miniStreamArray[cur].toString(16)} is ${last.toString(16)}`)
+        }
         cur++
         this.miniStreamArray[cur] = last
       }

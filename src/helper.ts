@@ -27,8 +27,8 @@ export function readDirectoryEntryInfo(cfbfile: CompoundFileBinary, index: numbe
   return entry
 }
 
-export function readStreamObjectContent(cfbfile: CompoundFileBinary, index: number, size: number): Uint8Array {
-  const buffer = new Uint8Array(size)
+export function readStreamObjectContent(cfbfile: CompoundFileBinary, index: number, size: number, buffer?: Uint8Array): Uint8Array {
+  const u8arr = buffer ?? new Uint8Array(size)
   if (size < cfbfile.header.miniStreamCutoffSize) {
     // mini stream
     let idx = index
@@ -36,15 +36,15 @@ export function readStreamObjectContent(cfbfile: CompoundFileBinary, index: numb
     const total = Math.ceil(size / MINI_SIZE)
     for (let i = 0; i < total - 1; i++) {
       const buf = cfbfile.getMiniStreamBufferOf(idx)
-      buffer.set(new Uint8Array(buf), i * MINI_SIZE)
+      u8arr.set(new Uint8Array(buf), i * MINI_SIZE)
       idx = cfbfile.getNextMiniSectorIndexOf(idx)
     }
     const left = size % MINI_SIZE
     if (left !== 0) {
       const buf = cfbfile.getMiniStreamBufferOf(idx)
-      buffer.set(new Uint8Array(buf, 0, left), (total - 1) * MINI_SIZE)
+      u8arr.set(new Uint8Array(buf, 0, left), (total - 1) * MINI_SIZE)
     }
-    return buffer
+    return u8arr
   }
   else {
     // normal stream
@@ -53,14 +53,14 @@ export function readStreamObjectContent(cfbfile: CompoundFileBinary, index: numb
     const total = Math.ceil(size / SECTOR_SIZE)
     for (let i = 0; i < total - 1; i++) {
       const buf = cfbfile.getStreamBufferOf(idx)
-      buffer.set(new Uint8Array(buf), i * SECTOR_SIZE)
+      u8arr.set(new Uint8Array(buf), i * SECTOR_SIZE)
       idx = cfbfile.getNextSectorIndexOf(idx)
     }
     const left = size % SECTOR_SIZE
     if (left !== 0) {
       const buf = cfbfile.getStreamBufferOf(idx)
-      buffer.set(new Uint8Array(buf, 0, left), (total - 1) * SECTOR_SIZE)
+      u8arr.set(new Uint8Array(buf, 0, left), (total - 1) * SECTOR_SIZE)
     }
-    return buffer
+    return u8arr
   }
 }
