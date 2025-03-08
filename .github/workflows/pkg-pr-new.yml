@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
