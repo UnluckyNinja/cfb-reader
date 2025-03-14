@@ -24,7 +24,8 @@
   "module": "./dist/cfb-reader.mjs",
   "types": "./dist/cfb-reader.d.mts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
